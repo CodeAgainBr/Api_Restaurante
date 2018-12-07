@@ -1,5 +1,6 @@
 class Api::V1::ProdutosController < Api::V1::ApiController
 	before_action :set_produto, only: [:show, :update, :destroy]
+	before_action :require_authorization_funcionario!, only: [:create, :update, :destroy]
 
 	# GET /api/v1/produto
 	def index
@@ -15,8 +16,6 @@ class Api::V1::ProdutosController < Api::V1::ApiController
 
 	# POST /api/v1/produto
 	def create
-		@produto = Produto.new(produto_params)
-
 		if @produto.save
 			render json: @produto, status: :created
 		else
@@ -42,7 +41,7 @@ class Api::V1::ProdutosController < Api::V1::ApiController
 
 		# Use callbacks to share common setup or constraints between actions.
 		def set_produto
-			@Produto = Produto.find(params[:id])
+			@produto = Produto.find(params[:id])
 		end
 
 		# Only allow a trusted parameter "white list" through.

@@ -1,3 +1,3 @@
 class Produto < ApplicationRecord
-	has_many :pedido, dependent: :destroy
+	has_many :item, dependent: :destroy
 end

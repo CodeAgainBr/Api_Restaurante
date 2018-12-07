@@ -9,6 +9,10 @@ class Api::V1::SessionsController < Devise::SessionsController
 		end
 	end
 
+	def destroy
+		
+	end
+
 	protected
 		def respond_with_authentication_token(resource)
 			render json: {
