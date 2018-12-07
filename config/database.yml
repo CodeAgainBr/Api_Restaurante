@@ -1,0 +1,29 @@
+## MySQL.
+# default: &default
+#   adapter: mysql2
+#   encoding: utf8
+#   pool: 5
+#   host: localhost
+
+## Postgres SQL.
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+
+development:
+  <<: *default
+  database: Restaurante
+
+  ## MySQL.
+  # username: root
+  # password:
+
+  ## Postgres SQL.
+  username: postgres
+  password: admin
+
+production:
+  <<: *default
