@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  quantidade: 
+  status: MyString
+  produto: one
+  mesa: one
+
+two:
+  quantidade: 
+  status: MyString
+  produto: two
+  mesa: two
