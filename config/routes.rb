@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :mesas
       resources :produtos
       resources :pedidos
+      resources :itens
     end
   end
 end
