@@ -16,10 +16,11 @@ ActiveRecord::Schema.define(version: 20181207232719) do
   enable_extension "plpgsql"
 
   create_table "items", force: :cascade do |t|
+    t.integer  "quantidade", default: 0
     t.integer  "produto_id"
     t.integer  "pedido_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.index ["pedido_id"], name: "index_items_on_pedido_id", using: :btree
     t.index ["produto_id"], name: "index_items_on_produto_id", using: :btree
   end
@@ -33,7 +34,6 @@ ActiveRecord::Schema.define(version: 20181207232719) do
   end
 
   create_table "pedidos", force: :cascade do |t|
-    t.integer  "quantidade", default: 0
     t.string   "status",     default: "aberto"
     t.integer  "mesa_id"
     t.datetime "created_at",                    null: false
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 20181207232719) do
   create_table "produtos", force: :cascade do |t|
     t.string   "nome"
     t.float    "valor",      default: 0.0
-    t.string   "descrição"
+    t.string   "descricao"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.index ["nome"], name: "index_produtos_on_nome", unique: true, using: :btree
