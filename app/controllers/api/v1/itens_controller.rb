@@ -1,10 +1,17 @@
-class Api::V1::ItensController < ApplicationController
+class Api::V1::ItensController < Api::V1::ApiController
 	before_action :set_item, only: [:show, :update, :destroy]
+	before_action :require_authorization_funcionario!, only: [:update, :destroy]
 
 	# GET /api/v1/item
 	def index
-		pedido = pedido.where(mesa: params[:mesa], status: "aberto")[0]
-	  @itens = Item.where(pedido: pedido)
+		cod = params[:cod].to_i
+
+		if cod == 0
+			pedido = Pedido.where(mesa: params[:mesa], status: "aberto")[0]
+		  @itens = Item.where(pedido: pedido)
+		elsif cod == 1
+		  @itens = Item.where(pedido: item_params[:pedido])
+		end
 	 
 	  render json: @itens
 	end
@@ -16,7 +23,9 @@ class Api::V1::ItensController < ApplicationController
 
 	# POST /api/v1/item
 	def create
-		@item = Item.new(item_params)
+		pedido = Pedido.find(item_params[:pedido])
+		produto = Produto.find(item_params[:produto])
+		@item = Item.new(item_params.merge(pedido: pedido, produto: produto))
 
 		if @item.save
 			render json: @item, status: :created
@@ -27,7 +36,10 @@ class Api::V1::ItensController < ApplicationController
  
 	# PATCH/PUT /api/v1/item/1
 	def update
-		if @item.update(item_params)
+		pedido = Pedido.find(item_params[:pedido])
+		produto = Produto.find(item_params[:produto])
+
+		if @item.update(item_params.merge(pedido: pedido, produto: produto))
 			render json: @item
 		else
 			render json: @item.errors, status: :unprocessable_entity
@@ -48,6 +60,6 @@ class Api::V1::ItensController < ApplicationController
 
 		# Only allow a trusted parameter "white list" through.
 		def item_params
-			params.require(:item).permit(:produto)
+			params.require(:item).permit(:produto, :quantidade, :pedido)
 		end
 end
