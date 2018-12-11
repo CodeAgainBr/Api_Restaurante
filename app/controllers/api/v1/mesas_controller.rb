@@ -1,6 +1,5 @@
 class Api::V1::MesasController < Api::V1::ApiController
 	before_action :set_mesa, only: [:show, :update, :destroy]
-	before_action :require_authorization_funcionario!, only: [:create, :update, :destroy]
 
 	# GET /api/v1/mesa
 	def index

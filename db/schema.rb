@@ -36,11 +36,9 @@ ActiveRecord::Schema.define(version: 20181207232719) do
     t.integer  "quantidade", default: 0
     t.string   "status",     default: "aberto"
     t.integer  "mesa_id"
-    t.integer  "user_id"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
     t.index ["mesa_id"], name: "index_pedidos_on_mesa_id", using: :btree
-    t.index ["user_id"], name: "index_pedidos_on_user_id", using: :btree
   end
 
   create_table "produtos", force: :cascade do |t|
@@ -78,5 +76,4 @@ ActiveRecord::Schema.define(version: 20181207232719) do
   add_foreign_key "items", "pedidos"
   add_foreign_key "items", "produtos"
   add_foreign_key "pedidos", "mesas"
-  add_foreign_key "pedidos", "users"
 end

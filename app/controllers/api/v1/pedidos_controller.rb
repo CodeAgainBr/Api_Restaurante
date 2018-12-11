@@ -1,10 +1,15 @@
 class Api::V1::PedidosController < Api::V1::ApiController
 	before_action :set_pedido, only: [:show, :update, :destroy]
-	before_action :require_authorization!, only: [:show, :update, :destroy]
 
 	# GET /api/v1/pedido
 	def index
-	  @pedidos = current_user.pedido
+		if params[:cod] == 0
+			@pedidos = Pedido.where(status: "aberto")
+		elsif params[:cod] == 1
+			mesa = Mesa.find(:id)
+			@pedidos = Pedido.where(mesa: mesa).order(status: "aberto")
+		end
+
 	  if @pedidos.nil?
 	  	render json: {}, status: :forbidden
 	  else
@@ -50,13 +55,7 @@ class Api::V1::PedidosController < Api::V1::ApiController
 		end
 
 		# Only allow a trusted parameter "white list" through.
-		def mesa_params
+		def pedido_params
 			params.require(:pedido).permit(:quantidade, :status, :produto, :mesa)
 		end
-
-		def require_authorization!
-     unless current_user == @pedido.user
-       render json: {}, status: :forbidden
-     end
-   end
 end

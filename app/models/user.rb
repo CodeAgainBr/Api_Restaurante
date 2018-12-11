@@ -5,8 +5,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :trackable
 
-  has_many :pedido, dependent: :destroy
-
   # def reset_authentication_token!
   # 	authentication_token = nil
   # 	save
