@@ -3,6 +3,7 @@ class CreateProdutos < ActiveRecord::Migration[5.0]
     create_table :produtos do |t|
       t.string :nome
       t.float :valor, default: 0.0
+      t.string :imagem
       t.string :descricao
 
       t.timestamps

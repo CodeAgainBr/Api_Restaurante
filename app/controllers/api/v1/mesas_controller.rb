@@ -1,6 +1,6 @@
 class Api::V1::MesasController < Api::V1::ApiController
 	before_action :set_mesa, only: [:show, :update, :destroy]
-	before_action :require_authorization_funcionario!, only: [:create, :update, :destroy]
+	before_action :require_authorization_funcionario!, only: [:create, :destroy]
 
 	# GET /api/v1/mesa
 	def index
@@ -27,10 +27,18 @@ class Api::V1::MesasController < Api::V1::ApiController
  
 	# PATCH/PUT /api/v1/mesa/1
 	def update
-		if @mesa.update(mesa_params)
-			render json: @mesa
+		if params[:cod] == 1
+			if @mesa.update(mesa_params)
+				render json: @mesa
+			else
+				render json: @mesa.errors, status: :unprocessable_entity
+			end
 		else
-			render json: @mesa.errors, status: :unprocessable_entity
+			if @mesa.update(status: mesa_params[:status])
+				render json: @mesa
+			else
+				render json: @mesa.errors, status: :unprocessable_entity
+			end
 		end
 	end
 
